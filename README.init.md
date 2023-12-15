@@ -43,3 +43,6 @@
     > 注意：如果下载完依赖后，项目中有依赖引入报错-ts，则使用`reload window`重启编辑器即可
 3. 如果未连接远程仓库，可以使用`git init`初始化git，然后进行首次git提交
 4. 删除项目中不需要的内容，留下简洁的模板
+5. git提交初始化模板
+6. 选择css样式框架sass，使用`pnpm i -D sass`安装sass依赖包，安装完成后`pnpm run dev`重启vite服务，即可使用scss语法编写样式
+7. 选择全局的初始化样式方案：[reset-css](https://www.npmjs.com/package/reset-css)(除此之外还有[normalcss](https://www.npmjs.com/package/normalcss)方案，更多npm包的可在[npmjs.com](https://www.npmjs.com/)官网进行查看)，reset-css会将所有的默认样式初始化为0，使用`pnpm i reset-css`下载依赖包，下载完成后，直接在main.ts中引入依赖即可
