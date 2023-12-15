@@ -193,3 +193,62 @@
     > 且tailwindcss中已经集成了resetcss的初始化样式,如果使用此css框架则可以移除原先的reset-css依赖包
 - [windicss](https://windicss.org/)——待维护状态
 - [unocss-GitHub](https://github.com/unocss/unocss) | [unocss-doc](https://unocss.dev/)按需加载特性——偏性能高偏体积小场景
+    > 集成操作记录
+    >
+    > 安装依赖包`pnpm i -D unocss`
+    >
+    > 在`vite.config.ts`中添加插件配置
+    >
+    >   ```ts
+    >     // vite.config.ts
+    >     import UnoCSS from 'unocss/vite'
+    >     import { defineConfig } from 'vite'
+    >     
+    >     export default defineConfig({
+    >       plugins: [
+    >         UnoCSS(),
+    >       ],
+    >     })
+    >   ```
+    >
+    > 创建unocss的配置文件`uno.config.ts`
+    >
+    >   ```ts
+    >     // uno.config.ts
+    >     import { defineConfig } from 'unocss'
+    >     
+    >     export default defineConfig({
+    >       // ...UnoCSS options
+    >     })
+    >   ```
+    > 
+    > 在主ts文件`main.ts`中添加引入`import 'virtual:uno.css'`
+    > 
+    > 安装unocss的初始化样式`pnpm add @unocss/reset`
+    >
+    > 安装完成后引入初始化样式`import '@unocss/reset/tailwind.css'`,引入后也可以移除之前安装的reset-css的依赖
+    >
+    > 重启服务后即可使用unocss语法编写css
+
+    > 附: 通过unocss配置tailwindcss方案:implemented the whole Tailwind CSS compatible utilities within [a single preset](https://unocss.dev/presets/wind)
+    >
+    > 混合集成步骤:
+    > 
+    > 安装依赖`pnpm add -D @unocss/preset-wind`
+    >
+    > 修改unocss的配置文件`uno.config.ts`
+    >
+    >   ```ts
+    >     // uno.config.ts
+    >     import { defineConfig } from 'unocss'
+    >     import presetWind from '@unocss/preset-wind'
+    >     // 或者这样引入:
+    >     // import { presetWind } from 'unocss'
+    >     
+    >     export default defineConfig({
+    >       presets: [
+    >         presetWind(),
+    >       ],
+    >     })
+    >   ```
+    > 自此即可使用tailwindcss语法写css样式了
