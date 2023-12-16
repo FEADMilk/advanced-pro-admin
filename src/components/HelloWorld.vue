@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="greetings">hello world!</div>
+  <div class="greetings">hello world!测试插件unplugin-vue-components</div>
 </template>
 
 <style scoped></style>

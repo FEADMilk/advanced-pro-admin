@@ -302,3 +302,42 @@
     >   ```
     >
     > 重新启动服务,即可将原有的路由自动引入源由`vue-router`修改为`vue-router/auto`
+
+## 组合式工具类utils库集成
+
+- [VueUse英文文档](https://vueuse.org/)
+- [VueUse中文文档](https://www.vueusejs.com/)
+
+> 集成步骤记录:
+>
+> 安装依赖`pnpm i @vueuse/core`
+>
+> 在`vite.config.ts`的`AutoImport`的`imports`选项中添加`"@vueuse/core"`即可在项目中以自动引入的方式使用VueUse,非自动引入方式就以传统的按需引入即可
+
+## 自定义组件自动引入插件方案集成
+
+- [unplugin-vue-components](https://github.com/unplugin/unplugin-vue-components)其会自动在`src/components`中自动查找组件并自动在页面中引入,无需再以传统方式手动按需引入
+
+> 集成步骤记录
+>
+> 安装依赖`pnpm i unplugin-vue-components -D`
+>
+> 在`vite.config.ts`中添加插件配置
+>
+>   ```ts
+>     // vite.config.ts
+>     import Components from 'unplugin-vue-components/vite'
+>     import { defineConfig } from 'vite'
+>     
+>     export default defineConfig({
+>       plugins: [
+>         Components({ /* options */ }),
+>       ],
+>     })
+>   ```
+>
+> 同样的在`tsconfig.app.json`中添加配置`"include": ["env.d.ts", "src/**/*", "src/**/*.vue", "typed-router.d.ts", "auto-imports.d.ts","components.d.ts"],`
+>
+> 其余配置项,如多层文件夹中命名相同的组件的冲突配置
+>
+> 第三方UI库的配置集成使用
