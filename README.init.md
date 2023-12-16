@@ -252,3 +252,53 @@
     >     })
     >   ```
     > 自此即可使用tailwindcss语法写css样式了
+
+## 自动导入方案:AutoImport+VueUse
+
+- [unplugin-auto-import](https://github.com/unplugin/unplugin-auto-import) vue/react均可使用
+    
+    > 配置过程记录:
+    >
+    > 安装依赖包`pnpm i -D unplugin-auto-import`
+    >
+    > 在`vite.config.ts`中添加插件配置
+    >
+    >   ```ts
+    >     // vite.config.ts
+    >     import AutoImport from 'unplugin-auto-import/vite'
+    >     import { defineConfig } from 'vite'
+    >     
+    >     export default defineConfig({
+    >       plugins: [
+    >         AutoImport({ /* options */ }),
+    >       ],
+    >     })
+    >   ```
+    >
+    > 在`tsconfig.app.ts`中添加:`"include": ["env.d.ts", "src/**/*", "src/**/*.vue", "typed-router.d.ts", "auto-imports.d.ts"],`以保证可以识别`auto-imports.d.ts`文件
+    >
+    > 至此我们在文件中编写代码如`const msg = ref("测试 unplugin-auto-import 插件");`时,再无需像传统编写方式那般引入`import {ref} from 'vue';`
+    >
+    > 因为我们的路由使用了`unplugin-vue-router`,所以我们还需要修改一下路由自动引入的相关配置,详情可以查看[unplugin-vue-router => Auto Imports](https://github.com/posva/unplugin-vue-router)部分
+    >
+    > 在`vite.config.ts`中添加并修改配置
+    >
+    >   ```ts
+    >     // vite.config.ts
+    >     import AutoImport from 'unplugin-auto-import/vite'
+    >     import { defineConfig } from 'vite'
+    >     import { VueRouterAutoImports } from 'unplugin-vue-router'
+    >     
+    >     export default defineConfig({
+    >       plugins: [
+    >         AutoImport({
+    >           imports: [
+    >              // 'vue-router',
+    >              VueRouterAutoImports,
+    >           ],
+    >         }),
+    >       ],
+    >     })
+    >   ```
+    >
+    > 重新启动服务,即可将原有的路由自动引入源由`vue-router`修改为`vue-router/auto`

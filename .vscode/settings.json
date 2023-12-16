@@ -1,0 +1,4 @@
+{
+  "typescript.preferences.autoImportFileExcludePatterns": ["vue-router"],
+  "liveServer.settings.root": "./dist"
+}
