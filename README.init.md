@@ -517,3 +517,15 @@
 > 插件集成步骤
 >
 > 安装依赖`pnpm add vite-plugin-pwa -D`
+>
+> 添加`vite.config.ts`配置
+> ```ts
+>   // vite.config.js / vite.config.ts
+>   import { VitePWA } from 'vite-plugin-pwa'
+>   
+>   export default {
+>     plugins: [
+>       VitePWA()
+>     ]
+>   }
+> ```
