@@ -529,3 +529,49 @@
 >     ]
 >   }
 > ```
+>
+> 相关更新配置与manifest以及更新之类的函数钩子,参阅官方文档
+>
+> 详情见分支pwa
+
+## mock数据插件集成
+
+- [vite-plugin-mock](https://github.com/vbenjs/vite-plugin-mock)
+
+> 集成步骤
+>
+> 安装依赖包`pnpm add mockjs`,`pnpm add vite-plugin-mock -D`
+>
+> 配置`vite.config.ts`
+> ```ts
+>   import { UserConfigExport, ConfigEnv } from 'vite'
+>   
+>   import { viteMockServe } from 'vite-plugin-mock'
+>   import vue from '@vitejs/plugin-vue'
+>   
+>   export default ({ command }: ConfigEnv): UserConfigExport => {
+>     return {
+>       plugins: [
+>         vue(),
+>         viteMockServe({
+>           // default
+>           mockPath: 'mock',
+>           enable: true,
+>         }),
+>       ],
+>     }
+>   }
+> ```
+>
+> 在根目录下创建文件夹并新建test.ts文件`mock/test.ts`,并将官方文档中的示例test.ts中的测试接口代码粘贴进去,并重启服务器
+>
+> ***注意***:在此处node18+的环境中,重启服务报错``,查看GitHub仓库中的issues发现已有人提出此问题[NodeJS18+严重错误：if (!require.cache) {](https://github.com/vbenjs/vite-plugin-mock/issues/120),解决方法是:
+>
+>> 暂时解决方案如下：
+>> 第一种：当package.json中"type":"module"时：为修改此处代码，但这是一种破坏性行为，而且并非永久修改。
+>> 
+>> import  { createRequire } from "module";
+>> const require = createRequire(import.meta.url);
+>> 第二种：去掉package.json中"type":"module"。
+>
+> 选用第二种方法,再次重启服务器,问题解决

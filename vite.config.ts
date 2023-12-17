@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'; // 不分环境时的简单配置入口
+// import { UserConfigExport, ConfigEnv } from 'vite'; // 分环境加载依赖插件的复杂场景入口
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import VueRouter from 'unplugin-vue-router/vite'; // 自动路由
@@ -12,6 +13,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'; // 自�
 import Icons from 'unplugin-icons/vite'; // icon库集成
 import IconsResolver from 'unplugin-icons/resolver'; // 自动导入icon组件
 import Layouts from 'vite-plugin-vue-layouts'; // 多层级页面切换布局插件配置
+import { viteMockServe } from 'vite-plugin-mock'; // mock数据插件集成
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -57,6 +59,11 @@ export default defineConfig({
     Layouts({
       layoutsDirs: 'src/layouts',
       defaultLayout: 'default'
+    }),
+    viteMockServe({
+      // default
+      mockPath: 'mock',
+      enable: true
     })
   ],
   resolve: {
