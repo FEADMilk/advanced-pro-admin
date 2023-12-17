@@ -3,15 +3,15 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import VueRouter from 'unplugin-vue-router/vite';
-import UnoCSS from 'unocss/vite';
-import AutoImport from 'unplugin-auto-import/vite';
-import { VueRouterAutoImports } from 'unplugin-vue-router';
-import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import Icons from 'unplugin-icons/vite';
-import IconsResolver from 'unplugin-icons/resolver';
-import Layouts from 'vite-plugin-vue-layouts';
+import VueRouter from 'unplugin-vue-router/vite'; // 自动路由
+import UnoCSS from 'unocss/vite'; // css框架库
+import AutoImport from 'unplugin-auto-import/vite'; // 自动导入插件
+import { VueRouterAutoImports } from 'unplugin-vue-router'; // 自动导入路由配置
+import Components from 'unplugin-vue-components/vite'; // 自动导入自定义组件配置
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'; // 自动导入第三方库组件resolver混合配置
+import Icons from 'unplugin-icons/vite'; // icon库集成
+import IconsResolver from 'unplugin-icons/resolver'; // 自动导入icon组件
+import Layouts from 'vite-plugin-vue-layouts'; // 多层级页面切换布局插件配置
 
 // https://vitejs.dev/config/
 export default defineConfig({

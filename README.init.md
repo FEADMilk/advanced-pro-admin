@@ -444,6 +444,76 @@
 它适用于那些只在特定情境下需要的类型定义，或者当你不希望这些类型定义影响到项目的其他部分时。
 ```
 
-## 宏和语法糖库的集成配置
+## 宏和语法糖库的集成配置 --- vue3.3已内置,可放弃配置
 
 - [Vue Macros](https://vue-macros.dev/) 是一个库，用于实现尚未被 Vue 正式实现的提案或想法。这意味着它将探索更多宏和语法糖到 Vue 中。
+
+> 集成步骤记录
+>
+> 下载依赖包`pnpm i -D unplugin-vue-macros`
+>
+> 修改`vite.config.ts`的配置(在插件中,使用`VueMacros`将`vue()`和`vueJsx()`包裹起来)
+> ```ts
+>   // vite.config.ts
+>   import VueMacros from 'unplugin-vue-macros/>  vite'
+>   import Vue from '@vitejs/plugin-vue'
+>   // import VueJsx from '@vitejs/plugin-vue-jsx'
+>   
+>   export default defineConfig({
+>     plugins: [
+>       VueMacros({
+>         plugins: {
+>           vue: Vue(),
+>           // vueJsx: VueJsx(), // 如果需要
+>         },
+>       }),
+>     ],
+>   })
+> ```
+>
+> **注意**:若出现ts一直报错无法找到`'unplugin-vue-macros/vite'`模块的话,此处可以有两种解决思路:(新版本已修复此问题)
+>
+> - 将引入改为:`import VueMacros from 'unplugin-vue-macros/vite';`,然后使用时改为:`VueMacros.vite({})`
+> - 将引入改为:`import VueMacros from 'unplugin-vue-macros/dist/vite';`,以其构建包来引入
+>
+> > ***如果以后别的第三方库的包引入也出现类似问题,也可尝试以此方法解决***
+>
+> 添加ts配置,在`env.t.ts`中添加:`/// <reference types="unplugin-vue-macros/macros-global" />`
+>
+> 添加vscode扩展`Volar`支持:下载依赖包`pnpm i -D @vue-macros/volar`,然后在tsconfig.json中添加配置
+> ```json
+>   // tsconfig.json
+>   {
+>     "vueCompilerOptions": {
+>       "plugins": [
+>         "@vue-macros/volar/define-options",
+>         "@vue-macros/volar/define-models",
+>         "@vue-macros/volar/define-props",
+>         "@vue-macros/volar/define-props-refs",
+>         "@vue-macros/volar/short-vmodel",
+>         "@vue-macros/volar/define-slots",
+>         "@vue-macros/volar/jsx-directive",
+>         "@vue-macros/volar/setup-jsdoc"
+>   
+>         // 选择以下其中一个
+>         // "@vue-macros/volar/export-expose",
+>         // "@vue-macros/volar/export-props",
+>         // "@vue-macros/volar/export-render",
+>       ]
+>       // ...
+>     }
+>   }
+> ```
+
+> ***PS:***在使用自定义组件的自动引入时,两个组件之间容易出现ts类型不一致却被ts忽略检查的情况,可以通过以下方法来解决:
+>
+> 在根目录下新建`.npmrc`的文件,添加`shamefully-hoist=true`配置,然后使用`pnpm i`重新安装所有的依赖包,其作用是:会自动调整依赖包的排列顺序,将各依赖包的公共依赖包层级提升,并缩小整个包的体积
+
+## PWA应用的集成
+
+- [PWA](https://web.dev/learn/pwa/)是一种可以是页面变为可以下载\更新\离线访问等的应用的技术
+- [PWA集成插件:vite-plugin-pwa](https://github.com/vite-pwa/vite-plugin-pwa)
+
+> 插件集成步骤
+>
+> 安装依赖`pnpm add vite-plugin-pwa -D`
