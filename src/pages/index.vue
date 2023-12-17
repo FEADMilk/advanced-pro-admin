@@ -6,10 +6,31 @@
     <HelloWorld msg="'hello world'"></HelloWorld>
     <UserLogin />
     <Child @click-count="clickCount"></Child>
+    <ReloadPrompt></ReloadPrompt>
+    <hr />
+    hello world!
   </div>
 </template>
 
 <script setup lang="ts">
+import { registerSW } from 'virtual:pwa-register';
+
+onMounted(() => {
+  registerSW({
+    immediate: true,
+    // onNeedRefresh: () => {
+    //   console.log('need refresh');
+    // },
+    onRegisteredSW: (url, registration) => {
+      console.log(`SW registered: ${url}`);
+      console.log('registration', registration);
+      setInterval(() => {
+        registration && registration.update();
+      }, 5000);
+    }
+  });
+});
+
 // import Child from '@/components/Child.vue';
 // defineOptions({
 //   name:"HomeIndex1"

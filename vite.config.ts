@@ -12,6 +12,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'; // 自�
 import Icons from 'unplugin-icons/vite'; // icon库集成
 import IconsResolver from 'unplugin-icons/resolver'; // 自动导入icon组件
 import Layouts from 'vite-plugin-vue-layouts'; // 多层级页面切换布局插件配置
+import { VitePWA } from 'vite-plugin-pwa'; // PWA依赖集成
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -57,6 +58,39 @@ export default defineConfig({
     Layouts({
       layoutsDirs: 'src/layouts',
       defaultLayout: 'default'
+    }),
+    VitePWA({
+      // registerType: 'autoUpdate',
+      // workbox: {
+      //   clientsClaim: true,
+      //   skipWaiting: true
+      // },
+      // devOptions: {
+      //   enabled: true
+      // },
+      manifest: {
+        name: 'Vite PWA',
+        short_name: 'Vite PWA',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: '192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          },
+          {
+            src: '512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
+        ]
+      }
     })
   ],
   resolve: {
