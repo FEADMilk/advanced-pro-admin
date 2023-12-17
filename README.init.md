@@ -341,3 +341,109 @@
 > 其余配置项,如多层文件夹中命名相同的组件的冲突配置
 >
 > 第三方UI库的配置集成使用
+>
+> 第三方库 [ELement-plus](https://element-plus.org/zh-CN/) 配合集成步骤
+>
+> 安装库依赖包`pnpm install element-plus`
+>
+> 在`vite.config.ts`中添加插件的resolver配置
+>
+>   ```ts
+>     // vite.config.ts
+>     import Components from 'unplugin-vue-components/vite'
+>     import { defineConfig } from 'vite'
+>     import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+>     
+>     export default defineConfig({
+>       plugins: [
+>         Components({ 
+>           resolvers: [
+>             ElementPlusResolver()
+>           ],
+>         }),
+>       ],
+>     })
+>   ```
+
+## 图标插件集成
+
+- [unplugin-icons](https://github.com/unplugin/unplugin-icons)
+
+> 集成步骤记录
+>
+> 安装依赖包`pnpm i -D unplugin-icons`
+>
+> 在`vite.config.ts`中添加插件配置
+>
+>   ```ts
+>     // vite.config.ts
+>     import Icons from 'unplugin-icons/vite'
+>     import { defineConfig } from 'vite'
+>     
+>     export default defineConfig({
+>       plugins: [
+>         Icons({ /* options */ }),
+>       ],
+>     })
+>   ```
+
+- [iconify](https://iconify.design/)
+
+## 页面布局插件库的集成 => 解决不同层级页面拥有相同布局时的跳转切换
+
+- [vite-plugin-vue-layouts](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
+
+> 集成步骤记录
+>
+> 下载依赖包`pnpm install -D vite-plugin-vue-layouts`
+>
+> 在`vite.config.ts`中添加插件配置
+>
+>   ```ts
+>     // vite.config.ts
+>     import Layouts from 'vite-plugin-vue-layouts';
+>     import { defineConfig } from 'vite'
+>     
+>     export default defineConfig({
+>       plugins: [
+>         Layouts({ /* options */ }),
+>       ],
+>     })
+>   ```
+>
+> 修改`router/index.ts`文件
+> ```ts
+>   import { createRouter } from 'vue-router/auto'
+>   import { setupLayouts } from 'virtual:generated-layouts'
+>
+>   const router = createRouter({
+>     // ...
+>     extendRoutes: (routes) => setupLayouts(routes),
+>   })
+> ```
+>
+> 此时ts将会报错找不到`virtual:generated-layouts`,下面添加ts配置来解决此报错:
+>
+> 未解决的情况:按官网配置在`tsconfig.app.json`中添加配置`"types": ["vite-plugin-vue-layouts/client"]`,重启浏览器后未解决报错问题
+>
+> 最终解决报错方法:在`env.d.ts`文件中添加`/// <reference types="vite-plugin-vue-layouts/client" />`配置
+
+***两者配置的区别***
+```
+在 tsconfig.app.json 中添加 types 配置项：
+
+这种方式是在 TypeScript 的配置文件中直接指定了一个全局可用的类型定义集。
+当你添加 "types": ["vite-plugin-vue-layouts/client"] 到 tsconfig.app.json 中，TypeScript 编译器会自动包含这些类型定义，并在整个项目中使它们可用。
+这意味着在项目中的任何文件里，你都可以直接使用 vite-plugin-vue-layouts/client 提供的类型，而无需额外的导入或引用。
+这种方法适用于那些你希望在整个项目中普遍可用的类型定义。
+在 env.d.ts 文件中使用 /// <reference types="..." />：
+
+这种方法是通过 TypeScript 的三斜线指令来直接引用类型定义文件。
+当你在 env.d.ts 文件（或任何 .d.ts 文件）中添加 /// <reference types="vite-plugin-vue-layouts/client" />，它会告诉 TypeScript 编译器在编译过程中包含这些类型定义。
+这种方式通常用于当你需要在特定的文件或模块中引入额外的类型定义，而不是在整个项目中。
+它适用于那些只在特定情境下需要的类型定义，或者当你不希望这些类型定义影响到项目的其他部分时。
+```
+
+## 宏和语法糖库的集成配置
+
+- [Vue Macros](https://vue-macros.dev/) 是一个库，用于实现尚未被 Vue 正式实现的提案或想法。这意味着它将探索更多宏和语法糖到 Vue 中。

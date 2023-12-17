@@ -11,3 +11,14 @@
 <script setup lang="ts"></script>
 
 <style scoped></style>
+<!-- <route lang="yaml">
+meta:
+  layout: home
+</route> -->
+<route lang="json">
+{
+  "meta": {
+    "layout": "home"
+  }
+}
+</route>
